@@ -4,16 +4,22 @@ class Spork::AppFramework
   # The key :Rails maps to Spork::AppFramework::Rails
   #
   # This is used to reduce the amount of code needed to be loaded - only the detected application framework's support code is loaded.
+  # SUPPORTED_FRAMEWORKS = {
+  #   :Padrino => lambda {
+  #     File.exist?("config/boot.rb") && File.read("config/boot.rb").include?('PADRINO')
+  #   },
+  #   :Rails => lambda {
+  #     File.exist?("config/environment.rb") && (
+  #       File.read("config/environment.rb").include?('RAILS_GEM_VERSION') ||
+  #       (File.exist?("config/application.rb") && File.read("config/application.rb").include?("Rails::Application"))
+  #     )
+  #   }
+  # } unless defined? SUPPORTED_FRAMEWORKS
+  
   SUPPORTED_FRAMEWORKS = {
     :Padrino => lambda {
       File.exist?("config/boot.rb") && File.read("config/boot.rb").include?('PADRINO')
     },
-    :Rails => lambda {
-      File.exist?("config/environment.rb") && (
-        File.read("config/environment.rb").include?('RAILS_GEM_VERSION') ||
-        (File.exist?("config/application.rb") && File.read("config/application.rb").include?("Rails::Application"))
-      )
-    }
   } unless defined? SUPPORTED_FRAMEWORKS
   
   def self.setup_autoload
